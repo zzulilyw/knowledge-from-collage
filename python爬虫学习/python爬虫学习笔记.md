@@ -359,5 +359,86 @@ except urllib.error.URLError as e:
 
   ![1557061731780](C:\Users\lyw\AppData\Roaming\Typora\typora-user-images\1557061731780.png)
 
-  
 
+#### 6.3正则表达式常见函数
+
+- re.match() 函数
+
+  ~~~python
+  #如果想从源字符串的起始位置匹配一个模式，可以使用re.match()函数
+  #re.match()函数的使用格式：re.match(pattern, string, flag)
+  import re
+  string = "apythonhellomypythonhispythonourpythonend"
+  pattern = ".python."
+  result = re.match(pattern, string)
+  result2 = re.match(pattern, string).span()#span就是匹配到的范围，span()函数返回一个元组(tuple)
+  print(result)
+  print(result2)
+  #程序执行结果：
+  <_sre.SRE_Match object; span=(0, 8), match='apythonh'>
+  (0, 8)
+  ~~~
+
+- re.search() 函数
+
+  ~~~python
+  #也是一个匹配函数，与re.match()不同的是,re.match()函数从源字符串的开头进行匹配，而re.search()函数会在全文中进行检索并匹配
+  import re
+  string = "hellomypythonhispythonourpythonend"
+  pattern = ".python."
+  result = re.match(pattern, string)
+  result = re.search(pattern, string)
+  print(result)
+  print(result2)
+  #程序执行结果：
+  None
+  <_sre.SRE_Match object; span=(6, 14), match='ypythonh'>
+  #就是说match()方法只能从开头进行检测，检测不到就没了，但是
+  ~~~
+
+- 全局匹配函数
+
+  在上面的例子中可能有的字符串会有多个匹配项，但是上面的函数只能匹配到一个结果，如何将所有的结果都匹配出来呢？
+
+  思路如下：
+
+  1) 使用re.compile()对正则表达式进行预编译
+
+  2) 编译后，使用findall()根据正则表达式从源字符串中将匹配的结果全部找出。
+
+  ~~~python
+  import re
+  string = "hellomypythonhispythonourpythonend"
+  pattern = re.compile(".python.")#预编译
+  result = pattern.findall(string)#找出符合模式的所有结果
+  print(result)
+  #执行结果：
+  ['ypythonh', 'spythono', 'rpythone']
+  ~~~
+
+- re.sub()函数
+
+  如果想根据正则表达式来实现替换某些字符串的功能，我们可以用re.sub()函数实现
+
+  re.sub()函数格式如下
+
+  ~~~python
+  re.sub(pattern, rep, string, max)
+  ~~~
+
+  其中，第一个参数为对应的正则表达式，第二个参数为要替换成的字符串，第三个参数为源字符串，第四个参数为可选项，代表最多替换的次数，如果忽略不写，则会将符合模式的结果全部替换。
+
+  ~~~python
+  import re
+  string = "hellomypythonhispythonourpythonend"
+  pattern = ".python."
+  result1 = re.sub(pattern, "php", string)#全部替换
+  result2 = re.sub(pattern, "php", string, 2)#最多替换两次
+  print(result1)
+  print(result2)
+  #程序运行结果
+  hellomphpiphpuphpnd
+  hellomphpiphpurpythonend
+  ~~~
+
+  
