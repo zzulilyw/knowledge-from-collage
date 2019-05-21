@@ -1,0 +1,23 @@
+Added Component: Designator=power(HDR1X2)
+Added Pin To Net: NetName=VCC Pin=power-1
+Added Pin To Net: NetName=GND Pin=power-2
+Added Member To Class: ClassName=lesson10 Member=Component power P2
+Added Room: Name=lesson10
+Removed Pin From Net: NetName=NetU1_39 Pin=U2-1
+Added Pin To Net: NetName=VCC Pin=U2-1
+Removed Pin From Net: NetName=NetU1_38 Pin=U2-2
+Added Pin To Net: NetName=NetU1_39 Pin=U2-2
+Removed Pin From Net: NetName=NetU1_37 Pin=U2-3
+Added Pin To Net: NetName=NetU1_38 Pin=U2-3
+Removed Pin From Net: NetName=NetU1_36 Pin=U2-4
+Added Pin To Net: NetName=NetU1_37 Pin=U2-4
+Removed Pin From Net: NetName=NetU1_35 Pin=U2-5
+Added Pin To Net: NetName=NetU1_36 Pin=U2-5
+Removed Pin From Net: NetName=NetU1_34 Pin=U2-6
+Added Pin To Net: NetName=NetU1_35 Pin=U2-6
+Removed Pin From Net: NetName=NetU1_33 Pin=U2-7
+Added Pin To Net: NetName=NetU1_34 Pin=U2-7
+Removed Pin From Net: NetName=NetU1_32 Pin=U2-8
+Added Pin To Net: NetName=NetU1_33 Pin=U2-8
+Removed Pin From Net: NetName=VCC Pin=U2-9
+Added Pin To Net: NetName=NetU1_32 Pin=U2-9

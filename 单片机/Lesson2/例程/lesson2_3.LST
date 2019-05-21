@@ -1,0 +1,75 @@
+C51 COMPILER V6.12  LESSON2_3                                                              07/22/2007 16:41:13 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE LESSON2_3
+OBJECT MODULE PLACED IN .\lesson2_3.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\lesson2_3.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include <intrins.h>
+   3          #define uint unsigned int 
+   4          #define uchar unsigned char 
+   5          uchar temp,num,num1;
+   6          sbit beep=P2^3;
+   7          void delay(uint);
+   8          
+   9          void main()
+  10          {
+  11   1      		
+  12   1              temp=0xfe;
+  13   1      	while(1)
+  14   1      	{	
+  15   2      	for(num1=0;num1<3;num1++)
+  16   2      		{	
+  17   3      		for(num=0;num<8;num++)
+  18   3      		{
+  19   4      			P1=temp;
+  20   4      			beep=0;
+  21   4      			delay(100);
+  22   4      			temp=_crol_(temp,1);
+  23   4      			P1=0xff;
+  24   4      			beep=1;
+  25   4      			delay(100);	
+  26   4      		}
+  27   3      		}
+  28   2      for(num1=0;num1<3;num1++)
+  29   2      		{	
+  30   3      		for(num=0;num<8;num++)
+  31   3      		{
+  32   4      			P1=temp;
+  33   4      			beep=0;
+  34   4      			delay(100);
+  35   4      			temp=_cror_(temp,1);
+  36   4      			P1=0xff;
+  37   4      			beep=1;
+  38   4      			delay(100);	
+  39   4      		}
+  40   3      		}
+  41   2      		while(1);
+  42   2      	}
+  43   1      }
+  44          
+  45          void delay(uint z)
+  46          {
+  47   1      	uint x,y;
+  48   1      	for(x=z;x>0;x--)
+  49   1      		for(y=110;y>0;y--);	
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    138    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V6.12  LESSON2_3                                                              07/22/2007 16:41:13 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
