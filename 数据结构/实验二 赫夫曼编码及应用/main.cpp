@@ -48,9 +48,16 @@ void welcome(){
 	cout<<"0.退出"<<endl;
 }
 void creatTree(){
-	vec.push_back(huffman(0,0,0,0,'n'));
-	huffman huf1 = que.top();
-	
+	vec.push_back(huffman(0,0,0,0,'@'));
+	if(que.size()>=2) {
+		que.top().parent = 3;
+		vec.push_back(que.top());
+		que.pop();
+		que.top().parent = 3;
+		vec.push_back(que.top());
+		vec.push_back(huffman(vec[vec.length()-1]+vec[vec.length()-2], vec.length()-2, vec.length()-1, 0, '@'));
+		
+	}
 }
 void creatHuffman(){
 	cout<<"请输入你想要读取的文件路径(txt后缀)"<<endl;
@@ -75,7 +82,7 @@ void creatHuffman(){
 		que.push(huffman(timeIterator->second, 0, 0, 0, timeIterator->first));
 	}
 	times.clear();
-	 
+	
 }
 
 int main(){
