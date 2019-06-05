@@ -2,7 +2,7 @@
 #include <vector>
 #include <set>
 using namespace std;
-bool flag = 0;
+bool flag = 0;//表创建的标志
 typedef struct ElemType{
 	int a, b;
 	ElemType(int aa, int bb){
@@ -10,7 +10,7 @@ typedef struct ElemType{
 		this->b = bb;
 	}
 };
-vector<ElemType> vec1;
+vector<ElemType> vec1; 
 vector<ElemType> vec2;
 set<int> s1;
 set<int> s2;

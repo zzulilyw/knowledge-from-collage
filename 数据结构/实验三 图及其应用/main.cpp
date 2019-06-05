@@ -37,7 +37,7 @@ typedef struct tnode{//要存入优先队列的结点
 		this->procedure = procedure;
 	}
 	bool operator < (const tnode &n) const {
-		return this->time < n.time;
+		return this->time > n.time;
 	}
 }; 
 typedef struct lnode{//要存入优先队列的结点 
@@ -52,7 +52,7 @@ typedef struct lnode{//要存入优先队列的结点
 		this->procedure = procedure;
 	}
 	bool operator < (const lnode &n) const {
-		return this->time < n.time;
+		return this->length > n.length;
 	}
 }; 
 void bfs_time(){//采用bfs进行搜索最短路径或者最短时间 
@@ -142,7 +142,6 @@ void menu(){
 	cout<<"3.输入起点和终点帮你进行最短路径规划\n";
 	cout<<"4.删除弧(修路等添加事件)\n";
 	cout<<"5.删除结点\n";
-	cout<<"6.郑州地铁乘车路线规划样例\n";
 	cout<<"0.退出本系统\n";
 }
 void creat_node_and_arc(){
