@@ -2,8 +2,8 @@
 #include "solve.h"
 using namespace std;
 const int max_n = 1000;
-string textdata;
-string textcode;
+string dtext;
+string ctext;
 string textdecode;
 string path,savePath;
 map<char,int> ttime;
@@ -14,58 +14,50 @@ char key[max_n];
 int w[max_n];
 HuffmanTree HT;
 HuffmanCode HC;
-
 int num = 0;
-
 void CountStringChar(string s);
-
 void Printttime();
-
 void TempToArray();
-
 void PrintCode();
-
 string getCode(string data);
-
 string getDecode(string data);
-
 void init();
 
 void contrastFile(string code,string decode);
 int main()
 {
     bool flag = true;
-    int order = -1;
+    int choose = -1;
     while(1){
         welcome();
         cout<<"请输入操作命令：";
-        cin>>order;
-        switch(order){
+        cin>>choose;
+        switch(choose){
         case 1:
             init();
             cout<<"请输入文件路径，必须是完整路径，加上文件后缀名：";
             cin>>path;
-            textdata = readFile(path);
+            dtext = readFile(path);
             cout<<"以下为文件内容："<<"\n"
                 <<"----------------------------\n"
-                <<textdata<<"\n"
+                <<dtext<<"\n"
                 <<"----------------------------\n";
-            CountStringChar(textdata);
+            CountStringChar(dtext);
             TempToArray();
             HuffmanToCode(HT,HC,w,num);
-            textcode = getCode(textdata);
+            ctext = getCode(dtext);
             cout<<"加密后的密文:"<<endl;
-            cout<<textcode<<endl;
+            cout<<ctext<<endl;
             cout<<"请输入文件完整路径以便于保存密文:";
             cin>>savePath;
-            saveFile(savePath,textcode);
+            saveFile(savePath,ctext);
             cout<<"保存成功"<<endl;
             break;
         case 2:
             cout<<"请输入文件路径，必须是完整路径，加上文件后缀名：";
             cin>>path;
-            textdata = readFile(path);
-            textdecode = getDecode(textdata);
+            dtext = readFile(path);
+            textdecode = getDecode(dtext);
             cout<<"明文:"<<endl;
             cout<<"-----------------------------"<<endl;
             cout<<textdecode<<endl;
@@ -108,15 +100,15 @@ void contrastFile(string code,string decode){
     string temp2 = readFile(decode);
 
     if(temp1 == temp2){
-        cout<<"密文文件 == 明文文件"<<endl;
+        cout<<"密文文件与明文文件一致"<<endl;
     }else{
-        cout<<"密文文件 != 明文文件"<<endl;
+        cout<<"密文文件与明文文件不一致"<<endl;
     }
 }
 
 void init(){
-    textdata="";
-    textcode="";
+    dtext="";
+    ctext="";
     textdecode="";
     path="";
     savePath="";
@@ -209,4 +201,97 @@ void CountStringChar(string s){
     for(int i=0;  i<length; i++){
         ttime[s[i]]++;
     }
+}
+string readFile(string path)
+{
+    const char * filepath = path.data();
+    ifstream ifile(filepath);
+    ostringstream buf;
+    char ch;
+    while(buf&&ifile.get(ch))
+        buf.put(ch);
+    ifile.close();
+    return buf.str();
+}
+
+void saveFile(string savePath,string data){
+    ofstream outFile;
+    const char * path = savePath.data();
+    outFile.open(path);
+    outFile << data;
+    outFile.close();
+}
+
+void select(const HuffmanTree &HT,int n,int &s1,int &s2){
+    s1 = s2 = 0;
+
+    int min1 = INF,min2 = INF;
+
+    for (int i=1; i<=n; ++i){
+        
+        if ( HT[i].parent == 0 ){
+            if ( HT[i].weight < min1 ){
+                min2 = min1;
+                s2 = s1;
+                min1 = HT[i].weight;
+                s1 = i;
+            }
+            else if ( (HT[i].weight >= min1) && (HT[i].weight < min2) ){
+                min2 = HT[i].weight;
+                s2 = i;
+            }
+        }
+    }
+}
+void HuffmanToCode(HuffmanTree &HT,HuffmanCode &HC,int *w,int n)
+{
+
+    int s1,s2;
+    int m = 2*n-1;
+    int i,c,f,j;
+    HT = (HuffmanTree)malloc((m+1)*sizeof(HTNode));
+
+    
+    for (int i=1; i<=n; i++)
+        HT[i] = {w[i],0,0,0};
+    
+    for (int i=n+1; i<=m; i++)
+        HT[i] = {0,0,0,0};
+
+    
+    for (int i=n+1; i<=m; i++){
+        
+        select(HT,i-1,s1,s2);
+        
+        HT[s1].parent = i;
+        HT[s2].parent = i;
+        HT[i].Lchild = s1;
+        HT[i].Rchild = s2;
+        HT[i].weight = HT[s1].weight + HT[s2].weight;
+    }
+    
+    HC = (HuffmanCode)malloc((n)*sizeof(char *));
+    
+    char * code = (char *)malloc(n*sizeof(char));
+    code[n-1] = '\0';
+
+    for (int i = 1; i <= n; i++ ){
+        int start = n-1;
+        for (int c = i,f = HT[c].parent; f!=0; c=HT[c].parent,f=HT[c].parent){
+            
+            if ( HT[f].Lchild == c )
+                code[--start] = '0';
+            else if(HT[f].Rchild == c)
+                code[--start] = '1';
+        }
+        HC[i] = (char *)malloc(strlen(code)*sizeof(char));
+        strcpy(HC[i],&code[start]);
+    }
+}
+
+void welcome(){
+    cout<<"实验二 哈夫曼编码及其应用"<<endl;
+    cout<<"1.编码\n2.解码"<<endl;
+    cout<<"3.对比\n4.查看规则"<<endl;
+    cout<<"5.清空内存\n6.退出程序"<<endl;
 }
