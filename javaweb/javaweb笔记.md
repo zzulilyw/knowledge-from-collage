@@ -211,16 +211,61 @@ Jsp和Servlet可以相互转换
     - a.get方式在地址栏上显示请求信息（信息有限4-5kb，如果存在大文件就会出错）； post不会
     - b.文件上传操作：必须是post
   
+    **统一编码：在server.xml中统一get方式的编码：**
+  
+    ```xml
+    URIEncoding = "UTF-8"
+    ```
+  
+    
+  
   - response：响应对象
   
     提供方法：
   
     - void addCookie(Cookie cookie) : 服务端向客户端增加cookie对象
+  
     - void sendRedirect(String location) throws IOException: 重定向，页面跳转的一种方式
-    - void setContentType(String type):设置服务端相应编码（设置服务端的contentType类型）
-    - 
+  
+      重定向会导致数据丢失，使用request.getRequestDispatcher().forward(request, response);进行页面跳转，请求转发，可以获取到数据，但是地址栏没有改变。
+  
+      **请求转发与重定向的区别**：
+  
+      - 1.地址栏是否改变 请求转发不会改变，重定向会改变
+      - 2.是否保留第一次请求时的数据 请求转发会保留，重定向不会保留
+      - 3.请求的次数 请求转发是1次，重定向是2次（重定向相当于告诉你**你找错人了**，然后你要重新找，因此发送了两次请求，第二次窗口也会变）
+      - ![1561564447531](C:\Users\lyw\AppData\Roaming\Typora\typora-user-images\1561564447531.png)
+      - ![1561564466665](C:\Users\lyw\AppData\Roaming\Typora\typora-user-images\1561564466665.png)
+  
+      
+  
+    - void setContentType(String type):设置服务端响应编码（设置服务端的contentType类型）
   
   - session
+  
+    - session与Cookie:
+  
+      - session是内置对象（服务端），Cookie不是内置对象（客户端）：Cookie是由服务端产生，再发送给客户端保存。Cookie就是本地缓存，相当于本地缓存的作用：客户端->服务端(Hello.mp4)
+  
+      - Cookie提高访问的效率但是安全性差。
+  
+      - Cookie：key=value
+  
+        javax.servlet.http.Cookie
+  
+        public Cookie(String key, String value)：构造方法
+  
+        String getName()：得到当前Cookie对象的key
+  
+        String getValue()：得到当前Cookie对象的value
+  
+        void setMaxAge(int expiry):设置最大有效期（秒）
+  
+      - 服务端发送给客户端：使用response对象中的addCookie方法：**response.addCookie(Cookie cookie)**
+  
+        然后使用页面跳转（转发重定向都可以）
+  
+        客户端获取**cookie:request.getCookies();**(目前来说只能获取全部Cookie)
   
   - application
   
