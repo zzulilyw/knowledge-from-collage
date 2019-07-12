@@ -227,7 +227,7 @@ Jsp和Servlet可以相互转换
   
     - void sendRedirect(String location) throws IOException: 重定向，页面跳转的一种方式
   
-      重定向会导致数据丢失，使用request.getRequestDispatcher().forward(request, response);进行页面跳转，请求转发，可以获取到数据，但是地址栏没有改变。
+      重定向会导致数据丢失，使用**request.getRequestDispatcher().forward(request, response);**进行页面跳转，请求转发，可以获取到数据，但是地址栏没有改变。
   
       **请求转发与重定向的区别**：
   
@@ -241,7 +241,7 @@ Jsp和Servlet可以相互转换
   
     - void setContentType(String type):设置服务端响应编码（设置服务端的contentType类型）
   
-  - session
+  - session：会话
   
     - session与Cookie:
   
@@ -266,6 +266,50 @@ Jsp和Servlet可以相互转换
         然后使用页面跳转（转发重定向都可以）
   
         客户端获取**cookie:request.getCookies();**(目前来说只能获取全部Cookie)
+      
+    - sesson机制
+  
+      客户端第一次请求服务端时（直接匹配失败，因为没有sessionID），服务端会产生一个session对象（用于保存客户端信息）；
+  
+      并且每个session对象都会有一个唯一的sessionID（用于区分其他sessionID）；
+  
+      服务端又会产生一个cookie，并且该cookie的name=JSESSIONED，value=服务端sessionID的值；
+  
+      然后服务端会在响应客户端的同时，将该cookie发送给客户端，至此客户端就有了一个cookie(JSESSIONID)；
+  
+      因此客户端的cookie就可以和服务端的session一一对应（JSESSIONID - sessionID）。
+  
+      客户端第二次/第n次请求服务端时：服务端会先用客户端cookie中的JSESSIONID去服务端的session中匹配sessionID，如果匹配成功，说明此用户不是第一次访问，无需登录。
+  
+    - session共享问题
+  
+      a.存储在服务端
+  
+      b.在同一个用户请求时共享，同一浏览器的session是共享的
+  
+      c.session实现机制：第一次请求时产生一个sessionID，并赋值给cookie的jsessionID然后发送给客户端。最终通过session的jsessionID进行匹配实现一个一一对相应的关系。
+  
+    - session方法：
+  
+      String getID():获取sessionID
+  
+      boolean isNew():判断是否是新用户（第一次访问）
+  
+      void invalidate():使session失效（退出登录，注销）
+  
+      void setAttribute():
+  
+      Object getAttribute():
+  
+      void setMaxInactiveInterval(秒)：设置最大有效非活动时间
+  
+      int getMaxInactiveInterval():获得最大有效非活动时间
+  
+    - session实现案例
+  
+      ![1562916961992](C:\Users\lyw\AppData\Roaming\Typora\typora-user-images\1562916961992.png)
+  
+      
   
   - application
   
