@@ -291,19 +291,19 @@ Jsp和Servlet可以相互转换
   
     - session方法：
   
-      String getID():获取sessionID
+      **String getID()**:获取sessionID
   
-      boolean isNew():判断是否是新用户（第一次访问）
+      **boolean isNew()**:判断是否是新用户（第一次访问）
   
-      void invalidate():使session失效（退出登录，注销）
+      **void invalidate()**:使session失效（退出登录，注销）
   
-      void setAttribute():
+      **void setAttribute()**:
   
-      Object getAttribute():
+      **Object getAttribute()**:
   
-      void setMaxInactiveInterval(秒)：设置最大有效非活动时间
+      **void setMaxInactiveInterval(秒)**：设置最大有效非活动时间
   
-      int getMaxInactiveInterval():获得最大有效非活动时间
+      **int getMaxInactiveInterval()**:获得最大有效非活动时间
   
     - session实现案例
   
@@ -311,11 +311,73 @@ Jsp和Servlet可以相互转换
   
       
   
-  - application
+  - application：全局对象（可以获取到当前项目的一切信息）
+  
+    - String getContextPath()：获得虚拟路径
+    - String getRealPath()：获得绝对路径（虚拟路径相对的绝对路径）
   
   - config
   
   - page
   
   - exception
+
+### 四种范围对象
+
+四种对象的共有方法：
+
+```java
+Object getAttribute(String name);//根据属性名或属性值寻找对应的对象
+void setAttribute(String name, Object obj);//设置对象，如果之前的name没有映射，那么就将name对应到obj。如果之前的name有映射，那么将name的映射修改为obj
+void removeAttribute(String name);//根据属性名删除映射
+```
+
+#### pageContext：jsp页面容器
+
+- 范围：当前页面有效
+
+  案例：当跳转到其他页面时，保存的内容会变为空，**页面跳转后无效**
+
+#### request：请求对象
+
+- 范围：同一次请求有效
+
+  案例：请求转发相当于一次请求，重定向时这个值就拿不到了，重定向相当于两次请求
+
+#### session：会话对象
+
+- 范围：同一次会话有效（无论怎么跳转都有效；**重定向后无效**）
+
+#### application：全局对象
+
+- 范围：全局有效（在整个项目运行期间都有效，切换浏览器也有效，**切换项目无效，关闭服务器无效**）
+
+尽量用小的对象，因为对象的范围越大，对性能的损耗越大。
+
+## JDBC的使用
+
+### JDBC的主要功能
+
+- DriverManager：管理JDBC的驱动
+
+- Connection：连接
+
+- CallableStatement：调用数据库中的 存储过程/存储函数
+
+- Result：返回的结果集
+
+### JDBC访问数据库的主要步骤
+
+- 导入驱动，加载具体的驱动类（具体连接的是的哪种数据库）
+- 与数据库建立连接
+- 发送sql，执行
+- 处理结果集（查询）
+
+### 数据库驱动
+
+|           | 驱动jar                    | 具体驱动类                                   | 连接字符串 |
+| --------- | -------------------------- | -------------------------------------------- | ---------- |
+| Oracle    | ojdbc-x.jar                | oracle.jdbc.OracleDriver                     | //百度     |
+| MySQL     | mysql-connector-java-x.jar | com.mysql.jdbc.Driver                        |            |
+| SqlServer | sqljdbc-x.jar              | com.microsoft.sqlserver.jdbc.SQLServerDriver |            |
 
