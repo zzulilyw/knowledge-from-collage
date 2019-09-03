@@ -1,4 +1,7 @@
+[TOC]
+
 # javaweb笔记
+
 ## 访问tomcat
 
 http://localhost:8080/
@@ -380,4 +383,44 @@ void removeAttribute(String name);//根据属性名删除映射
 | Oracle    | ojdbc-x.jar                | oracle.jdbc.OracleDriver                     | //百度     |
 | MySQL     | mysql-connector-java-x.jar | com.mysql.jdbc.Driver                        |            |
 | SqlServer | sqljdbc-x.jar              | com.microsoft.sqlserver.jdbc.SQLServerDriver |            |
+
+## Servlet生命周期
+
+```mermaid
+graph LR
+	加载 --> 初始化
+	初始化 --> 服务
+	服务 --> 销毁
+	销毁 --> 卸载
+```
+
+在加载和卸载时，Servlet容器会自动处理
+
+- 加载
+- 初始化：init() , 该方法会在Servlet被加载并实例化的以后执行
+- 服务：service() -> doGet()    doPost()
+- 销毁：destroy(),   Servlet被系统回收会被执行
+- 卸载
+
+若想要在服务器启动时就初始化，在web.xml里面servlet标签内加入语句（servlet2.5）
+
+```xml
+<load-on-startup></load-on-startup>
+```
+
+然后在这个标签中间插入1即可
+
+其中的数字1代表顺序第一个执行
+
+也可以直接在servlet中初始化，将头部的@WebServlet变为以下语句
+
+```java
+@WebServlet(value="", loadOnStartup=1)
+```
+
+## Servlet API
+
+
+
+
 
