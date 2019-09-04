@@ -426,3 +426,35 @@ graph LR
 
 ![1567499506922](图片/1567499506922.png)
 
+## MVC三层架构
+
+与MVC设计模式的目标一致：都是为了解耦合、提高代码复用；区别：而这对项目的理解角度不同
+
+### 三层组成
+
+1. 表示层（USL， User Show Layer； 视图层）
+
+   - 前台：对应于MVC中的View， 用于和用户交互、界面的显示
+
+     jsp js html css jquery等web前端技术
+
+   - 后台：对用于MVC中的Controller， 用于**控制跳转、调用业务逻辑**层
+
+     Servlet (SpringMVC Struts2), 位于xxx.swervlet包中
+
+2. 业务逻辑层（BLL， Business Logic Layer； Service层）
+
+   - 直接访问数据库，原子性的操作（增删改查）
+
+     一般位于xxx.service包中(也可以称为xxx.manager, xx.bll)
+
+   - 接收表示层的请求调用
+
+3. 数据访问层（DAL， Data Access Layer； Dao层）
+
+   - 直接访问数据库的操作，原子性的操作（增删改查）
+
+     一般位于xxx.dao包
+
+### 三层间的关系
+
