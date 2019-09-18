@@ -362,12 +362,12 @@ void removeAttribute(String name);//根据属性名删除映射
 ### JDBC的主要功能
 
 - DriverManager：管理JDBC的驱动
-
 - Connection：连接
-
+- Statement(PreparedStatement):增删改查
 - CallableStatement：调用数据库中的 存储过程/存储函数
-
 - Result：返回的结果集
+
+![1568705273371](图片/1568705273371.png)
 
 ### JDBC访问数据库的主要步骤
 
@@ -378,11 +378,11 @@ void removeAttribute(String name);//根据属性名删除映射
 
 ### 数据库驱动
 
-|           | 驱动jar                    | 具体驱动类                                   | 连接字符串 |
-| --------- | -------------------------- | -------------------------------------------- | ---------- |
-| Oracle    | ojdbc-x.jar                | oracle.jdbc.OracleDriver                     | //百度     |
-| MySQL     | mysql-connector-java-x.jar | com.mysql.jdbc.Driver                        |            |
-| SqlServer | sqljdbc-x.jar              | com.microsoft.sqlserver.jdbc.SQLServerDriver |            |
+|           | 驱动jar                    | 具体驱动类                                   | 连接字符串                                                   |
+| --------- | -------------------------- | -------------------------------------------- | ------------------------------------------------------------ |
+| Oracle    | ojdbc-x.jar                | oracle.jdbc.OracleDriver                     | jdbc:oracle:thin:@localhost:1521:ORCL                        |
+| MySQL     | mysql-connector-java-x.jar | com.mysql.jdbc.Driver                        | jdbc:mysql://localhost:3306/数据库实例名                     |
+| SqlServer | sqljdbc-x.jar              | com.microsoft.sqlserver.jdbc.SQLServerDriver | jdbc:microsoft:sqlserver:localhost:1433;databasename=数据库实例名 |
 
 ## Servlet生命周期
 
