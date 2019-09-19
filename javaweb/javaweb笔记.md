@@ -300,7 +300,7 @@ Jsp和Servlet可以相互转换
   
       **void invalidate()**:使session失效（退出登录，注销）
   
-      **void setAttribute()**:
+      **void setAttribute()**:设置
   
       **Object getAttribute()**:
   
