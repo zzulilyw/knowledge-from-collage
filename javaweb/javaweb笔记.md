@@ -369,6 +369,112 @@ void removeAttribute(String name);//根据属性名删除映射
 
 ![1568705273371](图片/1568705273371.png)
 
+- Connection产生Statement对象：createStatement()
+- Connection产生PreparedStatement对象：prepareStatement()
+- Connection产生CallableStatement对象：prepareCall();
+
+#### ResultSet
+
+- 保存结果集：
+
+```sql
+select * from Xxx
+```
+
+- next()：光标下移，返回是否有下一条数据 true/false
+- previous()：true/false
+- getXxx(字段名|位置)
+
+#### Statement操作数据库
+
+- 增删改：executeUpdate()
+- 查询：executeQuery()
+
+#### PreparedStatement操作数据库
+
+```java
+public interface PreparedStatement extends Statement
+```
+
+因此
+
+- 增删改：executeUpdate();
+- 查询：executeQuery();
+- 赋值操作：setXxx();
+
+可以进行预编译
+
+```java
+String sql = "insert into student values(?,?,?,?);";//先进行预编译再进行set
+PreparedStatement pstmt = connection.prepareStatement(sql);
+pstmt.setInt(1, 36);
+pstmt.setString(2, "zhangsan");
+pstmt.setInt(3, 36);
+pstmt.setInt(4, "s3");
+
+int count = pstmt.executeUpdate();
+```
+
+#### Statement与PreparedStatement的区别
+
+**推荐使用PreparedStatement，原因如下：**
+
+1. 编码更加简便（避免了字符串的拼接）
+
+   - stmt:
+
+     ```java
+     String sql = "insert into student(stuno, stuname) values('"+name+"', "+age+");";
+     stmt.executeUpdate(sql);
+     ```
+
+   - pstmt:
+
+     ```java
+     String sql = "insert into student(stuno, stuname) values(?,?);";
+     pstmt = connection.prepareStatement(sql);//预编译
+     pstmt.setString(1, name);
+     pstmt.setInt(2, age);
+     ```
+
+2. 提高性能（因为有预编译操作，因此只需要编译一次）
+
+   需要重复增加100条时，stmt需要编译100次，pstmt只需要编译一次
+
+3. 安全（可以有效防止被注入）
+
+   stmt:存在被注入的风险
+
+   pstmt:防止sql被注入
+
+#### CallableStatement：调用存储过程、存储函数（未完！！）
+
+```java
+connection.prepareCall(参数：存储过程或存储函数名);
+```
+
+参数格式：
+
+存储过程（无返回值return，用Out参数替代）：
+
+{ call 存储过程名(参数列表) }
+
+存储函数（有返回值return）：
+
+{? = call 存储函数名（参数列表）}
+
+#### 处理CLOB[Text]/BLOB类型（未完！！）
+
+a. 存储路径 
+
+- 存储：将路径和完整文件名以字符串形式存储到数据库中
+- 获取：1.获取该路径 2.使用Java IO获取
+
+b.使用CLOB/BLOB
+
+- CLOB：大文本数据 （小说）
+- BLOB：二进制文件
+
 ### JDBC访问数据库的主要步骤
 
 - 导入驱动，加载具体的驱动类（具体连接的是的哪种数据库）
