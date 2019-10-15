@@ -564,3 +564,18 @@ graph LR
 
 ### 三层间的关系
 
+## 下载
+
+1. 请求（地址a， form），请求Servlet
+2. Servlet通过文件的地址 将文件转为输入流 读到Servlet中
+3. 通过输出流下载
+
+| 文件类型                     | Content-Type                     |
+| ---------------------------- | -------------------------------- |
+| 二进制文件（任何类型的文件） | application/octet-stream         |
+| Word                         | application/msword               |
+| Excel                        | application/vmd-ms-excel         |
+| 图片                         | image/gif, image/bmp, image/jpeg |
+| 文本文件                     | text/plain                       |
+| html网页                     | text/html                        |
+
