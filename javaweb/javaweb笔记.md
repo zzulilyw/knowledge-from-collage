@@ -567,8 +567,15 @@ graph LR
 ## 下载
 
 1. 请求（地址a， form），请求Servlet
-2. Servlet通过文件的地址 将文件转为输入流 读到Servlet中
-3. 通过输出流下载
+
+```jsp
+<a href="DownloadServlet?filename=index.jsp">下载</a>
+```
+
+如上所示，传递文件名
+
+1. Servlet通过文件的地址 将文件转为输入流 读到Servlet中
+2. 通过输出流下载
 
 | 文件类型                     | Content-Type                     |
 | ---------------------------- | -------------------------------- |
@@ -578,4 +585,11 @@ graph LR
 | 图片                         | image/gif, image/bmp, image/jpeg |
 | 文本文件                     | text/plain                       |
 | html网页                     | text/html                        |
+
+注意：下载文件需要设置两个响应头，如下所示
+
+```java
+response.addHeader("contentType", "application/octet-stream");//对应的表，当前为二进制
+response.addHeader("content-Disposition", "attachment;filename="+fileName);
+```
 
