@@ -490,6 +490,16 @@ b.使用CLOB/BLOB
 | MySQL     | mysql-connector-java-x.jar | com.mysql.jdbc.Driver                        | jdbc:mysql://localhost:3306/数据库实例名                     |
 | SqlServer | sqljdbc-x.jar              | com.microsoft.sqlserver.jdbc.SQLServerDriver | jdbc:microsoft:sqlserver:localhost:1433;databasename=数据库实例名 |
 
+## ajax
+
+### js:
+
+XMLHttpRequest对象
+
+### jquery
+
+{1:"11",2:22}
+
 ## Servlet生命周期
 
 ```mermaid
