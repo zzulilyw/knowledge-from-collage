@@ -496,9 +496,64 @@ b.使用CLOB/BLOB
 
 XMLHttpRequest对象
 
-### jquery
+### jquery:推荐
 
-{1:"11",2:22}
+#### 方法一：
+
+~~~javascript
+$.ajax({
+    //url:服务器地址
+    //请求方式:get,post
+    //data:请求数据
+    //success:function(result, testStatus){},error:function(xhr, errorMessage,e){}});
+    
+})
+
+
+var $mobile = $("#mobile").val();
+	$.ajax({
+		url:"tests",
+		type:"post",
+		data:"mobile="+$mobile,
+		success:function(result, testStatus){
+			if(result == "true") {
+				alert("电话已存在注册失败");
+			}else if(result == "false") {
+				alert("注册成功");
+			}
+		},
+		error:function(xhr, errorMessage, e) {
+			alert("系统异常");
+		}
+	});
+~~~
+
+#### 方法二：
+
+```javascript
+$("#tip").load(
+	"tests",
+	"mobile="+$mobile
+);
+```
+
+#### 方法三：getJSON
+
+~~~javascript
+$.getJSON(
+    服务器地址
+    JSON格式的请求数据
+    function(result) {
+        
+    }
+);
+~~~
+
+
+
+
+
+
 
 ## Servlet生命周期
 
